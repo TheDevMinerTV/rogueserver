@@ -1,0 +1,27 @@
+services:
+  client:
+    image: ghcr.io/thedevminertv/rogueserver:master
+    build: .
+    restart: unless-stopped
+    command:
+      - http://localhost:22002
+      - http://localhost:22002
+    environment:
+      MODE: "client"
+    ports:
+      - "22001:8080"
+
+  server:
+    image: ghcr.io/thedevminertv/rogueserver:master
+    build: .
+    restart: unless-stopped
+    command:
+      - --dbaddr=db
+      - --dbuser=mysql
+      - --dbpass=mysql
+      - --dbname=mysql
+      - --debug
+    environment:
+      MODE: "api"
+    ports:
+      - "22002:8001"
